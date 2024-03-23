@@ -17,13 +17,13 @@ import javax.swing.UIManager;
  */
 public class RestaurantMangagerView extends javax.swing.JFrame {
 
-    private 
     /**
      * Creates new form RestaurantMangagerView
      */
     public RestaurantMangagerView() {
+        System.out.println("init RestaurantMangagerView");
         initComponents();
-        jMenu.addActionListener();
+        //jMenu.addActionListener();
     }
 
     /**
@@ -185,12 +185,8 @@ public class RestaurantMangagerView extends javax.swing.JFrame {
     }
     
     public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                
-                
-            }
-        });
+        RestaurantMangagerView restaurantMangagerView = new RestaurantMangagerView();
+        restaurantMangagerView.setVisible(true);
     }
     /**
      * @param args the command line arguments
