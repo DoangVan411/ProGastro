@@ -23,7 +23,6 @@ public class RestaurantMangagerView extends javax.swing.JFrame {
     public RestaurantMangagerView() {
         System.out.println("init RestaurantMangagerView");
         initComponents();
-        //jMenu.addActionListener();
     }
 
     /**
@@ -34,7 +33,7 @@ public class RestaurantMangagerView extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        menuController = new MenuController(this);
         jFrame1 = new javax.swing.JFrame();
         jMenuItem1 = new javax.swing.JMenuItem();
         jPanel_Menu = new javax.swing.JPanel();
@@ -131,11 +130,7 @@ public class RestaurantMangagerView extends javax.swing.JFrame {
         );
 
         jMenu.setText("Menu");
-        jMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuActionPerformed(evt);
-            }
-        });
+
         jMenuBar1.add(jMenu);
 
         jMenu_Tables.setText("Tables");
@@ -154,6 +149,19 @@ public class RestaurantMangagerView extends javax.swing.JFrame {
             .addComponent(jPanel_Menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        //when click menu item jmenu
+        jMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (jPanel_Menu.isVisible()) {
+                    System.out.println("jPanel_Menu is visible");
+                    jPanel_Menu.setVisible(false);
+                } else {
+                    System.out.println("jPanel_Menu is not visible");
+                    jPanel_Menu.setVisible(true);
+                }
+            }
+        });
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -165,13 +173,6 @@ public class RestaurantMangagerView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_nameOfDishActionPerformed
 
-    //Nếu ấn vào menu thì hiện panel_menu
-    private void jMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuActionPerformed
-        String menuItem = evt.getActionCommand();
-        if(menuItem.equals("Menu")){
-            openPanel_Menu();
-        }
-    }//GEN-LAST:event_jMenuActionPerformed
 
     public void openPanel_Menu(){
         new Thread(new Runnable(){
@@ -209,5 +210,7 @@ public class RestaurantMangagerView extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea_descriptionOfDish;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField_nameOfDish;
+
+    private MenuController menuController;
     // End of variables declaration//GEN-END:variables
 }

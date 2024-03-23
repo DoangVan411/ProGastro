@@ -1,27 +1,29 @@
 package controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import view.RestaurantMangagerView;
 
-public class MenuController implements ActionListener{
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class MenuController implements ActionListener {
 
     public static int menuEventMode;
-    
+
     private RestaurantMangagerView restaurantMangagerView;
 
-    public MenuController(RestaurantMangagerView restaurantMangagerView){
+    public MenuController(RestaurantMangagerView restaurantMangagerView) {
         this.restaurantMangagerView = restaurantMangagerView;
+        System.out.println("MenuController: init MenuController");
     }
-           
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("Menu"));
+        if (e.getActionCommand().equals("Menu")) ;
         {
-            
+
         }
-        
+
     }
-    
-    
+
+
 }
