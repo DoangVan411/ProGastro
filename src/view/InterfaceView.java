@@ -4,8 +4,10 @@
  */
 package view;
 
+import controller.DishInfoController;
 import controller.PMenuController;
 import controller.MenuBarController;
+import model.ManipulationWithDishInfo;
 import model.ManipulationWithMenu;
 
 /**
@@ -17,7 +19,6 @@ public class InterfaceView extends javax.swing.JFrame {
     /**
      * Creates new form InterfaceView
      */
-    
     MenuBarController menuBarController = new MenuBarController(this);
     ManipulationWithMenu manipulationWithMenu = new ManipulationWithMenu(this);
     PMenuController pMenuController = new PMenuController(this, manipulationWithMenu);
@@ -28,6 +29,7 @@ public class InterfaceView extends javax.swing.JFrame {
         initComponents();
         pManipulation.setVisible(false);
         addController();
+        isRevalidate();
     }
 
     /**
@@ -51,6 +53,8 @@ public class InterfaceView extends javax.swing.JFrame {
         btnAdd = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         lbArrowDown = new javax.swing.JLabel();
+        btnChooseImg = new javax.swing.JButton();
+        lbImageInMenu = new javax.swing.JLabel();
         lbArrow = new javax.swing.JLabel();
         scpDishes = new javax.swing.JScrollPane();
         pOfScp = new javax.swing.JPanel();
@@ -110,40 +114,63 @@ public class InterfaceView extends javax.swing.JFrame {
 
         lbArrowDown.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProGastroImage/arrow_13475987 - Copy.png"))); // NOI18N
 
+        btnChooseImg.setText("...");
+        btnChooseImg.setActionCommand("btnChooseImg");
+
+        lbImageInMenu.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
         javax.swing.GroupLayout pManipulationLayout = new javax.swing.GroupLayout(pManipulation);
         pManipulation.setLayout(pManipulationLayout);
         pManipulationLayout.setHorizontalGroup(
             pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pManipulationLayout.createSequentialGroup()
-                .addContainerGap(202, Short.MAX_VALUE)
-                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(184, 184, 184)
-                .addComponent(lbArrowDown)
-                .addContainerGap())
+            .addGroup(pManipulationLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pManipulationLayout.createSequentialGroup()
+                        .addComponent(btnChooseImg, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbImageInMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDescriptionOfMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(pManipulationLayout.createSequentialGroup()
+                        .addGap(0, 196, Short.MAX_VALUE)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnPriceOfMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pManipulationLayout.createSequentialGroup()
+                                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(184, 184, 184)
+                                .addComponent(lbArrowDown)))
+                        .addContainerGap())))
             .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pManipulationLayout.createSequentialGroup()
                     .addGap(7, 7, 7)
-                    .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnDescriptionOfMenu)
+                    .addComponent(btnName, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(tfNameInMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(pManipulationLayout.createSequentialGroup()
-                            .addComponent(btnName, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(tfNameInMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGap(18, 18, 18)
-                    .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(scpOfDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(146, 146, 146)
+                            .addComponent(tfPriceOfMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(pManipulationLayout.createSequentialGroup()
-                            .addComponent(btnPriceOfMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(tfPriceOfMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(8, Short.MAX_VALUE)))
+                            .addGap(31, 31, 31)
+                            .addComponent(scpOfDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         pManipulationLayout.setVerticalGroup(
             pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pManipulationLayout.createSequentialGroup()
-                .addContainerGap(165, Short.MAX_VALUE)
+                .addGap(14, 14, 14)
+                .addComponent(btnPriceOfMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbImageInMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnChooseImg)
+                        .addComponent(btnDescriptionOfMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(29, 29, 29)
                 .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -154,16 +181,12 @@ public class InterfaceView extends javax.swing.JFrame {
                 .addGroup(pManipulationLayout.createSequentialGroup()
                     .addGap(10, 10, 10)
                     .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tfPriceOfMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-                            .addComponent(btnPriceOfMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tfPriceOfMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tfNameInMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnName, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(scpOfDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(btnDescriptionOfMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(scpOfDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(75, 75, 75)))
         );
 
@@ -237,7 +260,7 @@ public class InterfaceView extends javax.swing.JFrame {
             pOnTheTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pOnTheTableLayout.createSequentialGroup()
                 .addComponent(scpDishesOnTable, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 164, Short.MAX_VALUE))
+                .addGap(0, 198, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pTablesLayout = new javax.swing.GroupLayout(pTables);
@@ -251,9 +274,9 @@ public class InterfaceView extends javax.swing.JFrame {
         );
         pTablesLayout.setVerticalGroup(
             pTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pTablesLayout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addComponent(pOnTheTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pTablesLayout.createSequentialGroup()
+                .addContainerGap(61, Short.MAX_VALUE)
+                .addComponent(pOnTheTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -283,21 +306,21 @@ public class InterfaceView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNameActionPerformed
+    private void btnDescriptionOfMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescriptionOfMenuActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnNameActionPerformed
+    }//GEN-LAST:event_btnDescriptionOfMenuActionPerformed
 
     private void btnPriceOfMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPriceOfMenuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPriceOfMenuActionPerformed
 
-    private void btnDescriptionOfMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescriptionOfMenuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDescriptionOfMenuActionPerformed
-
     private void tfNameInMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNameInMenuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfNameInMenuActionPerformed
+
+    private void btnNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNameActionPerformed
 
     
         
@@ -311,12 +334,14 @@ public class InterfaceView extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnAdd;
+    public javax.swing.JButton btnChooseImg;
     public javax.swing.JButton btnDescriptionOfMenu;
     public javax.swing.JButton btnName;
     public javax.swing.JButton btnPriceOfMenu;
     public javax.swing.JButton btnSave;
     public javax.swing.JLabel lbArrow;
     public javax.swing.JLabel lbArrowDown;
+    public javax.swing.JLabel lbImageInMenu;
     public javax.swing.JMenu menu;
     public javax.swing.JMenuBar menuBar;
     public javax.swing.JMenu menuTables;
@@ -341,8 +366,17 @@ public class InterfaceView extends javax.swing.JFrame {
         lbArrowDown.addMouseListener(menuBarController);
         btnAdd.addActionListener(pMenuController);
         btnSave.addActionListener(pMenuController);
+        btnChooseImg.addActionListener(pMenuController);
     }
 
+    void isRevalidate(){        
+        if(ManipulationWithDishInfo.isFixed == true){
+            System.out.println("Fixed");
+            this.pOfScp.revalidate();
+            ManipulationWithDishInfo.isFixed = false;
+        }
+    }
+    
     public void turnOnPDishInfo() {
         pTables.setVisible(false);
     }

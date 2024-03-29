@@ -7,9 +7,10 @@ package model;
 import Model.Dish;
 import Model.Dishes;
 import controller.PMenuController;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JButton;
+import java.io.File;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import view.DishInfo;
 import view.InterfaceView;
 
@@ -32,24 +33,19 @@ public class ManipulationWithMenu {
         this.interfaceView.tfNameInMenu.setText("");
         this.interfaceView.tfPriceOfMenu.setText("");
         this.interfaceView.taDescriptionInMenu.setText("");
+        this.interfaceView.lbImageInMenu.setIcon(null);
     }
     
     public void addDish(Dish dish){
         Dishes.dishes.add(dish);
         BtnDish btnNewDish = new BtnDish(dish);
-        btnNewDish.setText(dish.getName());
-        btnNewDish.setActionCommand("btnNewDish");
         btnNewDish.addActionListener(pMenuController);
         interfaceView.pOfScp.add(btnNewDish);
         interfaceView.pOfScp.revalidate();
         System.out.println("Added");
     }
     
-    public void showInfo(BtnDish btnDish, DishInfo dishInfo){
-        dishInfo.tfName.setText(btnDish.getDish().getName());
-        dishInfo.tfPrice.setText(btnDish.getDish().getPrice() + "");
-        dishInfo.taDescription.setText(btnDish.getDish().getDiscription());
-    }
+    
     
     public void resizePOfScp(int width, int height)
     {
@@ -59,7 +55,37 @@ public class ManipulationWithMenu {
         interfaceView.scpDishes.revalidate();
     }
     
-    public void fixDish(){
+    public void removeDish(){
         
+    }
+    
+    public boolean ifExist(Dish dish)
+    {
+        for(Dish tmpDish: Dishes.dishes){
+            if(dish.getName().equals(tmpDish.getName()) && 
+                    dish.getPrice()== tmpDish.getPrice() && 
+                    dish.getDiscription().equals(tmpDish.getDiscription()))
+            {
+                System.out.println("Dish is already existed!");
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public String addImage(){
+        System.out.println("Add Image");
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter imageFilter = new FileNameExtensionFilter("hinh anh", "jpg", "png");
+        fileChooser.setFileFilter(imageFilter);
+        fileChooser.setMultiSelectionEnabled(false);
+        
+        int choice = fileChooser.showDialog(fileChooser, "Choose");
+        if(choice == JFileChooser.APPROVE_OPTION){
+           File f = fileChooser.getSelectedFile();
+           interfaceView.lbImageInMenu.setIcon(new ImageIcon(f.getAbsolutePath()));
+           return f.getAbsolutePath();
+        }
+        return "";
     }
 }

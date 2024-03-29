@@ -4,17 +4,28 @@
  */
 package view;
 
+import controller.DishInfoController;
+import controller.MenuBarController;
+import controller.PMenuController;
+import javax.swing.JFrame;
+import model.ManipulationWithDishInfo;
+import model.ManipulationWithMenu;
+
 /**
  *
  * @author dell
  */
-public class DishInfo extends javax.swing.JFrame {
-
+public class DishInfo extends JFrame{
+    
+    
+    ManipulationWithDishInfo manipulationWithDishInfo = new ManipulationWithDishInfo(this);
+    DishInfoController dishInfoController = new DishInfoController(this, manipulationWithDishInfo);
     /**
      * Creates new form DishInfo
      */
     public DishInfo() {
         initComponents();
+        addListener();
     }
 
     /**
@@ -37,6 +48,8 @@ public class DishInfo extends javax.swing.JFrame {
         taDescription = new javax.swing.JTextArea();
         btnFix = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
+        lbImage = new javax.swing.JLabel();
+        btnChoose = new javax.swing.JButton();
 
         javax.swing.GroupLayout fDishInfoLayout = new javax.swing.GroupLayout(fDishInfo.getContentPane());
         fDishInfo.getContentPane().setLayout(fDishInfoLayout);
@@ -49,7 +62,7 @@ public class DishInfo extends javax.swing.JFrame {
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         pDishInfo.setBackground(new java.awt.Color(255, 255, 255));
         pDishInfo.setPreferredSize(new java.awt.Dimension(210, 468));
@@ -80,37 +93,48 @@ public class DishInfo extends javax.swing.JFrame {
 
         btnRemove.setText("Remove");
 
+        btnChoose.setText("...");
+
         javax.swing.GroupLayout pDishInfoLayout = new javax.swing.GroupLayout(pDishInfo);
         pDishInfo.setLayout(pDishInfoLayout);
         pDishInfoLayout.setHorizontalGroup(
             pDishInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pDishInfoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pDishInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(pDishInfoLayout.createSequentialGroup()
-                        .addComponent(lbPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfName))
-                    .addGroup(pDishInfoLayout.createSequentialGroup()
-                        .addComponent(lbDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pDishInfoLayout.createSequentialGroup()
-                        .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pDishInfoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnFix, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(63, 63, 63))
+            .addGroup(pDishInfoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pDishInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pDishInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(pDishInfoLayout.createSequentialGroup()
+                            .addComponent(lbPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(tfName))
+                        .addGroup(pDishInfoLayout.createSequentialGroup()
+                            .addComponent(lbDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(tfPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pDishInfoLayout.createSequentialGroup()
+                            .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(spDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pDishInfoLayout.createSequentialGroup()
+                        .addComponent(btnChoose, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lbImage, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pDishInfoLayout.setVerticalGroup(
             pDishInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pDishInfoLayout.createSequentialGroup()
-                .addGap(147, 147, 147)
+                .addContainerGap()
+                .addGroup(pDishInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbImage, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnChoose))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pDishInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfName, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -146,13 +170,20 @@ public class DishInfo extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-
-
+    
+    public void addListener()
+    {
+        btnFix.addActionListener(dishInfoController);
+        btnChoose.addActionListener(dishInfoController);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton btnChoose;
     public javax.swing.JButton btnFix;
     public javax.swing.JButton btnRemove;
     private javax.swing.JFrame fDishInfo;
     public javax.swing.JLabel lbDescription;
+    public javax.swing.JLabel lbImage;
     public javax.swing.JLabel lbName;
     public javax.swing.JLabel lbPrice;
     public javax.swing.JPanel pDishInfo;

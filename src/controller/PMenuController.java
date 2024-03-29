@@ -5,6 +5,7 @@
 package controller;
 
 import Model.Dish;
+import Model.Dishes;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -13,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.BtnDish;
+import model.ManipulationWithDishInfo;
 import model.ManipulationWithMenu;
 import view.DishInfo;
 import view.InterfaceView;
@@ -25,6 +27,8 @@ public class PMenuController implements ActionListener{
 
     InterfaceView interfaceView;
     ManipulationWithMenu manipulationWithMenu;
+    DishInfo dishInfo = new DishInfo();
+    ManipulationWithDishInfo manipulationWithDishInfo = new ManipulationWithDishInfo(dishInfo);
     
     public PMenuController(InterfaceView interfaceView, ManipulationWithMenu manipulationWithMenu)
     {
@@ -32,36 +36,45 @@ public class PMenuController implements ActionListener{
         this.manipulationWithMenu = manipulationWithMenu;
     }
 
+    public static BtnDish onState;
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-        JOptionPane.showMessageDialog(interfaceView,"You clicked" + " " + command);
         if(command.equals("Add")){
             manipulationWithMenu.eraseForm();
         }else if(command.equals("btnNewDish")){
             Object btnDish = e.getSource();
+            onState = (BtnDish) btnDish;
             DishInfo dishInfo = new DishInfo();
-            manipulationWithMenu.showInfo((BtnDish) btnDish, dishInfo);
+            manipulationWithDishInfo.showInfo((BtnDish) btnDish, dishInfo);
             dishInfo.setVisible(true);
+        }
+        else if(command.equals("btnChooseImg")){
+            System.out.println("haha");
+            manipulationWithMenu.addImage();
         }
         else{
             try{
+//                JOptionPane.showMessageDialog(interfaceView,"You clicked" + " " + command);
                 String name = this.interfaceView.tfNameInMenu.getText();
                 int price = Integer.valueOf(this.interfaceView.tfPriceOfMenu.getText());
                 String description = this.interfaceView.taDescriptionInMenu.getText();
+                
                 Dish dish = new Dish(name, price, description);
+                
                 if(command.equals("Save")){
-                    manipulationWithMenu.addDish(dish);
+                    if(!manipulationWithMenu.ifExist(dish))
+                    {
+                        manipulationWithMenu.addDish(dish);
+                    }
+                    else JOptionPane.showMessageDialog(interfaceView,"Dish is already existed!");
                     System.out.println("You clicked Save");
-                }else if(command.equals("Fix")){
-                    manipulationWithMenu.fixDish();
                 }
             }catch(Exception ex){
                 ex.printStackTrace();
             }
         }
     }
-        
-    
     
 }
