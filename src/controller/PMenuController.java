@@ -36,23 +36,28 @@ public class PMenuController implements ActionListener{
         this.manipulationWithMenu = manipulationWithMenu;
     }
 
-    public static BtnDish onState;
+    public static BtnDish onStage;
+    public static BtnDish dishClicked;
+    public static StringBuffer imgPath = new StringBuffer();
     
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
+        
         if(command.equals("Add")){
             manipulationWithMenu.eraseForm();
         }else if(command.equals("btnNewDish")){
             Object btnDish = e.getSource();
-            onState = (BtnDish) btnDish;
+            dishClicked = (BtnDish)btnDish;
+            onStage = (BtnDish) btnDish;
             DishInfo dishInfo = new DishInfo();
             manipulationWithDishInfo.showInfo((BtnDish) btnDish, dishInfo);
             dishInfo.setVisible(true);
         }
         else if(command.equals("btnChooseImg")){
-            System.out.println("haha");
-            manipulationWithMenu.addImage();
+            int size = imgPath.length();
+            imgPath.replace(0, size, manipulationWithMenu.addImage());
+            System.out.println(imgPath);
         }
         else{
             try{
@@ -60,9 +65,8 @@ public class PMenuController implements ActionListener{
                 String name = this.interfaceView.tfNameInMenu.getText();
                 int price = Integer.valueOf(this.interfaceView.tfPriceOfMenu.getText());
                 String description = this.interfaceView.taDescriptionInMenu.getText();
-                
-                Dish dish = new Dish(name, price, description);
-                
+                Dish dish = new Dish(name, price, description, imgPath.toString());
+                if(imgPath.equals("")) System.out.println("null");
                 if(command.equals("Save")){
                     if(!manipulationWithMenu.ifExist(dish))
                     {

@@ -7,11 +7,15 @@ package model;
 import Model.Dish;
 import Model.Dishes;
 import controller.DishInfoController;
+import java.awt.Dimension;
 import java.io.File;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import view.DishInfo;
+import view.InterfaceView;
 
 /**
  *
@@ -28,30 +32,45 @@ public class ManipulationWithDishInfo {
         this.dishInfo = dishInfo;
     }
 
-    public String getPath(String tmpPath){
-        String path = tmpPath;
-        return path;
-    }
     
-    public void fixDish(BtnDish btnDish, DishInfo dishInfo){
-        Dishes.dishes.remove(btnDish.getDish());
+    public void fixDish(BtnDish btnDish, DishInfo dishInfo, String image){
+        System.out.println(image);
+//        Dishes.dishes.remove(btnDish.dish);
         String name = this.dishInfo.tfName.getText();
         int price = Integer.valueOf(this.dishInfo.tfPrice.getText());
         String description = this.dishInfo.taDescription.getText();
-//        String image = this.addImage();
-        Dish tmpDish = new Dish(name, price, description);
+        Dish tmpDish = new Dish(name, price, description, image);
         Dishes.dishes.add(tmpDish);
         btnDish.setDish(tmpDish);
-//        btnDish.repaint();
-//        btnDish.revalidate();
-//        btnDish.setText(name);
+        dishInfo.lbImage.setIcon(new ImageIcon(image));
     }
     
     public void showInfo(BtnDish btnDish, DishInfo dishInfo){
-        dishInfo.tfName.setText(btnDish.getDish().getName());
-        dishInfo.tfPrice.setText(btnDish.getDish().getPrice() + "");
-        dishInfo.taDescription.setText(btnDish.getDish().getDiscription());
+        dishInfo.tfName.setText(btnDish.dish.getName());
+        dishInfo.tfPrice.setText(btnDish.dish.getPrice() + "");
+        dishInfo.taDescription.setText(btnDish.dish.getDiscription());
+        dishInfo.lbImage.setIcon(new ImageIcon(btnDish.dish.getImage()));
     }
+    
+    
+    public void removeDish(BtnDish btnDish, DishInfo dishInfo, Dish dish){
+        for(Dish tmpDish: Dishes.dishes){
+            if(dish.getName().equals(tmpDish.getName()) && 
+                    dish.getPrice()== tmpDish.getPrice() && 
+                    dish.getDiscription().equals(tmpDish.getDiscription())){
+                Dishes.dishes.remove(tmpDish);
+                break;
+            }
+        }
+        btnDish.setVisible(false);
+        btnDish.setPreferredSize(new Dimension(645, 1));
+        isFixed = true;
+        dishInfo.dispose();
+        for(Dish dishh: Dishes.dishes){
+            System.out.println(dishh.getName());
+        }
+    }
+    
     
     public String addImage(){
         System.out.println("Add Image");
@@ -68,5 +87,6 @@ public class ManipulationWithDishInfo {
         }
         return "";
     }
+
     
 }

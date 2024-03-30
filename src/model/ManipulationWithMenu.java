@@ -10,6 +10,7 @@ import controller.PMenuController;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import view.DishInfo;
 import view.InterfaceView;
@@ -38,6 +39,7 @@ public class ManipulationWithMenu {
     
     public void addDish(Dish dish){
         Dishes.dishes.add(dish);
+        System.out.println(dish.getImage());
         BtnDish btnNewDish = new BtnDish(dish);
         btnNewDish.addActionListener(pMenuController);
         interfaceView.pOfScp.add(btnNewDish);
@@ -55,18 +57,14 @@ public class ManipulationWithMenu {
         interfaceView.scpDishes.revalidate();
     }
     
-    public void removeDish(){
-        
-    }
     
-    public boolean ifExist(Dish dish)
+    public static boolean ifExist(Dish dish)
     {
         for(Dish tmpDish: Dishes.dishes){
             if(dish.getName().equals(tmpDish.getName()) && 
                     dish.getPrice()== tmpDish.getPrice() && 
                     dish.getDiscription().equals(tmpDish.getDiscription()))
             {
-                System.out.println("Dish is already existed!");
                 return true;
             }
         }

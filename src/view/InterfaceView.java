@@ -7,8 +7,12 @@ package view;
 import controller.DishInfoController;
 import controller.PMenuController;
 import controller.MenuBarController;
+import controller.PTableController;
+import java.awt.event.ActionListener;
+import model.BtnTable;
 import model.ManipulationWithDishInfo;
 import model.ManipulationWithMenu;
+import model.Table;
 
 /**
  *
@@ -22,7 +26,7 @@ public class InterfaceView extends javax.swing.JFrame {
     MenuBarController menuBarController = new MenuBarController(this);
     ManipulationWithMenu manipulationWithMenu = new ManipulationWithMenu(this);
     PMenuController pMenuController = new PMenuController(this, manipulationWithMenu);
-    
+    PTableController tableController = new PTableController(this);
     
     public InterfaceView() {
         System.out.println("init RestaurantMangagerView");
@@ -30,6 +34,8 @@ public class InterfaceView extends javax.swing.JFrame {
         pManipulation.setVisible(false);
         addController();
         isRevalidate();
+        this.pTables.setVisible(false);
+        setTable();
     }
 
     /**
@@ -59,9 +65,6 @@ public class InterfaceView extends javax.swing.JFrame {
         scpDishes = new javax.swing.JScrollPane();
         pOfScp = new javax.swing.JPanel();
         pTables = new javax.swing.JPanel();
-        pOnTheTable = new javax.swing.JPanel();
-        scpDishesOnTable = new javax.swing.JScrollPane();
-        tblAllDishes = new javax.swing.JTable();
         menuBar = new javax.swing.JMenuBar();
         menu = new javax.swing.JMenu();
         menuTables = new javax.swing.JMenu();
@@ -195,7 +198,7 @@ public class InterfaceView extends javax.swing.JFrame {
         scpDishes.setBackground(new java.awt.Color(0, 204, 204));
 
         pOfScp.setPreferredSize(new java.awt.Dimension(645, 430));
-        pOfScp.setLayout(new java.awt.GridLayout(5, 2));
+        pOfScp.setLayout(new java.awt.GridLayout(5, 5));
         scpDishes.setViewportView(pOfScp);
 
         javax.swing.GroupLayout pMenuLayout = new javax.swing.GroupLayout(pMenu);
@@ -235,50 +238,7 @@ public class InterfaceView extends javax.swing.JFrame {
                     .addContainerGap(209, Short.MAX_VALUE)))
         );
 
-        tblAllDishes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3"
-            }
-        ));
-        scpDishesOnTable.setViewportView(tblAllDishes);
-
-        javax.swing.GroupLayout pOnTheTableLayout = new javax.swing.GroupLayout(pOnTheTable);
-        pOnTheTable.setLayout(pOnTheTableLayout);
-        pOnTheTableLayout.setHorizontalGroup(
-            pOnTheTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pOnTheTableLayout.createSequentialGroup()
-                .addComponent(scpDishesOnTable, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pOnTheTableLayout.setVerticalGroup(
-            pOnTheTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pOnTheTableLayout.createSequentialGroup()
-                .addComponent(scpDishesOnTable, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 198, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout pTablesLayout = new javax.swing.GroupLayout(pTables);
-        pTables.setLayout(pTablesLayout);
-        pTablesLayout.setHorizontalGroup(
-            pTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pTablesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pOnTheTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        pTablesLayout.setVerticalGroup(
-            pTablesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pTablesLayout.createSequentialGroup()
-                .addContainerGap(61, Short.MAX_VALUE)
-                .addComponent(pOnTheTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        pTables.setLayout(new java.awt.GridLayout(6, 6));
 
         menu.setText("Menu");
         menuBar.add(menu);
@@ -297,8 +257,11 @@ public class InterfaceView extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(pTables, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(pTables, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pMenu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pTables.getAccessibleContext().setAccessibleName("");
@@ -348,13 +311,10 @@ public class InterfaceView extends javax.swing.JFrame {
     public javax.swing.JPanel pManipulation;
     public javax.swing.JPanel pMenu;
     public javax.swing.JPanel pOfScp;
-    public javax.swing.JPanel pOnTheTable;
     public javax.swing.JPanel pTables;
     public javax.swing.JScrollPane scpDishes;
-    public javax.swing.JScrollPane scpDishesOnTable;
     public javax.swing.JScrollPane scpOfDescription;
     public javax.swing.JTextArea taDescriptionInMenu;
-    public javax.swing.JTable tblAllDishes;
     public javax.swing.JTextField tfNameInMenu;
     public javax.swing.JTextField tfPriceOfMenu;
     // End of variables declaration//GEN-END:variables
@@ -373,6 +333,9 @@ public class InterfaceView extends javax.swing.JFrame {
         if(ManipulationWithDishInfo.isFixed == true){
             System.out.println("Fixed");
             this.pOfScp.revalidate();
+            this.pOfScp.repaint();
+            this.revalidate();
+            this.repaint();
             ManipulationWithDishInfo.isFixed = false;
         }
     }
@@ -381,5 +344,14 @@ public class InterfaceView extends javax.swing.JFrame {
         pTables.setVisible(false);
     }
 
-    
+    public void setTable(){
+        for(int i = 1; i <= 36; ++i){
+            Table table = new Table();
+            BtnTable btnTable = new BtnTable(table);
+            btnTable.setActionCommand("btnTable");
+            pTables.add(btnTable);
+            
+            btnTable.addActionListener(tableController);
+        }
+    }
 }

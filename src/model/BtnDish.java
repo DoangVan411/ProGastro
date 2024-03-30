@@ -20,16 +20,12 @@ public class BtnDish extends JButton{
         this.dish = dish;
         this.setText(dish.getName());
         this.setActionCommand("btnNewDish");
-//        this.setIcon(new ImageIcon(dish.getImage()));
+        this.setIcon(new ImageIcon(dish.getImage()));
     }
 
     public void setDish(Dish dish) {
         this.setText(dish.getName());
         this.dish = dish;
-//        this.setIcon(new ImageIcon(dish.getImage()));
-    }
-    
-    public Dish getDish() {
-        return dish;
+        this.setIcon(new ImageIcon(dish.getImage()));
     }
 }

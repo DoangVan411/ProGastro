@@ -236,6 +236,7 @@
         <Component class="javax.swing.JButton" name="btnRemove">
           <Properties>
             <Property name="text" type="java.lang.String" value="Remove"/>
+            <Property name="actionCommand" type="java.lang.String" value="btnRemove"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -249,6 +250,7 @@
         <Component class="javax.swing.JButton" name="btnChoose">
           <Properties>
             <Property name="text" type="java.lang.String" value="..."/>
+            <Property name="actionCommand" type="java.lang.String" value="btnChoose"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

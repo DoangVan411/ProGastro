@@ -23,11 +23,9 @@ public class MenuBarController implements MouseListener{
         if(e.getComponent().equals(interfaceView.menu)){
             interfaceView.pMenu.setVisible(true);
             interfaceView.pTables.setVisible(false);
-            interfaceView.scpDishesOnTable.setVisible(true);
         }else if(e.getComponent().equals(interfaceView.menuTables)){
             interfaceView.pMenu.setVisible(false);
             interfaceView.pTables.setVisible(true);
-            interfaceView.scpDishesOnTable.setVisible(false);
         }else if(e.getComponent().equals(interfaceView.lbArrow)){
 //            System.out.println("You clicked Arrow");
             interfaceView.pManipulation.setVisible(true);

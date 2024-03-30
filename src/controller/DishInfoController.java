@@ -6,6 +6,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import model.BtnDish;
 import model.ManipulationWithDishInfo;
 import view.DishInfo;
@@ -23,14 +24,20 @@ public class DishInfoController implements ActionListener{
         this.manipulationWithDishInfo = manipulationWithDishInfo;
     }
 
+    public static StringBuffer tmpImage = new StringBuffer();
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
+        
         if(command.equals("Fix"))
         {
-            manipulationWithDishInfo.fixDish(PMenuController.onState, dishInfo);
+            manipulationWithDishInfo.fixDish(PMenuController.onStage, dishInfo, tmpImage.toString());
         }else if(command.equals("btnChoose")){
-            manipulationWithDishInfo.addImage();
+            tmpImage.replace(0, tmpImage.length(), manipulationWithDishInfo.addImage());
+            dishInfo.lbImage.setIcon(new ImageIcon(tmpImage.toString()));
+        }else if(command.equals("btnRemove")){
+            manipulationWithDishInfo.removeDish(PMenuController.dishClicked, dishInfo, PMenuController.dishClicked.dish);
         }
     }
     

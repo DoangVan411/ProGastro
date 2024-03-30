@@ -4,15 +4,15 @@ public class Dish{
     private String name;
     private int price;
     private String discription;
-//    private String image;
-//
-//    public String getImage() {
-//        return image;
-//    }
-//
-//    public void setImage(String image) {
-//        this.image = image;
-//    }
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     
     
@@ -40,12 +40,12 @@ public class Dish{
         this.discription = discription;
     }
 
-    public Dish(String name, int price, String discription)
+    public Dish(String name, int price, String discription, String image)
     {
         this.name = name;
         this.price = price;
         this.discription = discription;
-//        this.image = image;
+        this.image = image;
     }
 
 }

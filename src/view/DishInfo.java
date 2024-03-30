@@ -92,8 +92,10 @@ public class DishInfo extends JFrame{
         btnFix.setText("Fix");
 
         btnRemove.setText("Remove");
+        btnRemove.setActionCommand("btnRemove");
 
         btnChoose.setText("...");
+        btnChoose.setActionCommand("btnChoose");
 
         javax.swing.GroupLayout pDishInfoLayout = new javax.swing.GroupLayout(pDishInfo);
         pDishInfo.setLayout(pDishInfoLayout);
@@ -175,6 +177,7 @@ public class DishInfo extends JFrame{
     {
         btnFix.addActionListener(dishInfoController);
         btnChoose.addActionListener(dishInfoController);
+        btnRemove.addActionListener(dishInfoController);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
