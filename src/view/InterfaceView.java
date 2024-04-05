@@ -4,15 +4,35 @@
  */
 package view;
 
+import Model.Dish;
+import Model.Dishes;
 import controller.DishInfoController;
 import controller.PMenuController;
 import controller.MenuBarController;
 import controller.PTableController;
 import java.awt.event.ActionListener;
 import model.BtnTable;
-import model.ManipulationWithDishInfo;
-import model.ManipulationWithMenu;
+import controller.ManipulationWithDishInfo;
+import controller.ManipulationWithMenu;
+import controller.ManipulationWithTable;
+import java.awt.Color;
+import java.awt.Image;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Set;
+import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
+import model.BtnDish;
+
 import model.Table;
+import model.Tables;
 
 /**
  *
@@ -29,13 +49,14 @@ public class InterfaceView extends javax.swing.JFrame {
     PTableController tableController = new PTableController(this);
     
     public InterfaceView() {
+        ImageIcon icon = new ImageIcon("src//ProGastroImage//frameicon.png");
+        this.setIconImage(icon.getImage());
         System.out.println("init RestaurantMangagerView");
         initComponents();
-        pManipulation.setVisible(false);
         addController();
-        isRevalidate();
         this.pTables.setVisible(false);
         setTable();
+        setBtnDish();
     }
 
     /**
@@ -58,10 +79,8 @@ public class InterfaceView extends javax.swing.JFrame {
         btnDescriptionOfMenu = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
-        lbArrowDown = new javax.swing.JLabel();
         btnChooseImg = new javax.swing.JButton();
         lbImageInMenu = new javax.swing.JLabel();
-        lbArrow = new javax.swing.JLabel();
         scpDishes = new javax.swing.JScrollPane();
         pOfScp = new javax.swing.JPanel();
         pTables = new javax.swing.JPanel();
@@ -71,11 +90,18 @@ public class InterfaceView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ProGastro");
+        setBackground(new java.awt.Color(0, 102, 102));
         setName("frame"); // NOI18N
         setResizable(false);
 
-        pManipulation.setPreferredSize(new java.awt.Dimension(652, 0));
+        pMenu.setBackground(new java.awt.Color(0, 204, 204));
 
+        pManipulation.setBackground(new java.awt.Color(0, 153, 153));
+        pManipulation.setPreferredSize(new java.awt.Dimension(650, 210));
+
+        btnName.setBackground(new java.awt.Color(0, 102, 102));
+        btnName.setFont(new java.awt.Font("SVN-Amsi Narw Light", 1, 14)); // NOI18N
+        btnName.setForeground(new java.awt.Color(255, 255, 255));
         btnName.setText("Name of dish");
         btnName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,6 +116,9 @@ public class InterfaceView extends javax.swing.JFrame {
             }
         });
 
+        btnPriceOfMenu.setBackground(new java.awt.Color(0, 102, 102));
+        btnPriceOfMenu.setFont(new java.awt.Font("SVN-Amsi Narw Light", 1, 14)); // NOI18N
+        btnPriceOfMenu.setForeground(new java.awt.Color(255, 255, 255));
         btnPriceOfMenu.setText("Price of dish");
         btnPriceOfMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,6 +133,9 @@ public class InterfaceView extends javax.swing.JFrame {
         taDescriptionInMenu.setRows(5);
         scpOfDescription.setViewportView(taDescriptionInMenu);
 
+        btnDescriptionOfMenu.setBackground(new java.awt.Color(0, 102, 102));
+        btnDescriptionOfMenu.setFont(new java.awt.Font("SVN-Amsi Narw Light", 1, 14)); // NOI18N
+        btnDescriptionOfMenu.setForeground(new java.awt.Color(255, 255, 255));
         btnDescriptionOfMenu.setText("Description");
         btnDescriptionOfMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,13 +143,18 @@ public class InterfaceView extends javax.swing.JFrame {
             }
         });
 
+        btnAdd.setBackground(new java.awt.Color(0, 102, 102));
+        btnAdd.setFont(new java.awt.Font("SVN-Amsi Narw Light", 1, 14)); // NOI18N
+        btnAdd.setForeground(new java.awt.Color(255, 255, 255));
         btnAdd.setText("Add");
 
+        btnSave.setBackground(new java.awt.Color(0, 102, 102));
+        btnSave.setFont(new java.awt.Font("SVN-Amsi Narw Light", 1, 14)); // NOI18N
+        btnSave.setForeground(new java.awt.Color(255, 255, 255));
         btnSave.setText("Save");
 
-        lbArrowDown.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProGastroImage/arrow_13475987 - Copy.png"))); // NOI18N
-
-        btnChooseImg.setText("...");
+        btnChooseImg.setForeground(new java.awt.Color(255, 255, 255));
+        btnChooseImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProGastroImage/icon ảnh-01.png"))); // NOI18N
         btnChooseImg.setActionCommand("btnChooseImg");
 
         lbImageInMenu.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -133,20 +170,19 @@ public class InterfaceView extends javax.swing.JFrame {
                         .addComponent(btnChooseImg, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbImageInMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btnDescriptionOfMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pManipulationLayout.createSequentialGroup()
-                        .addGap(0, 196, Short.MAX_VALUE)
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnPriceOfMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pManipulationLayout.createSequentialGroup()
-                                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(184, 184, 184)
-                                .addComponent(lbArrowDown)))
-                        .addContainerGap())))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnPriceOfMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(190, 190, 190))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pManipulationLayout.createSequentialGroup()
+                .addContainerGap(215, Short.MAX_VALUE)
+                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(209, 209, 209))
             .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pManipulationLayout.createSequentialGroup()
                     .addGap(7, 7, 7)
@@ -155,11 +191,11 @@ public class InterfaceView extends javax.swing.JFrame {
                     .addComponent(tfNameInMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(pManipulationLayout.createSequentialGroup()
-                            .addGap(146, 146, 146)
-                            .addComponent(tfPriceOfMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(154, 154, 154)
+                            .addComponent(tfPriceOfMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(pManipulationLayout.createSequentialGroup()
-                            .addGap(31, 31, 31)
-                            .addComponent(scpOfDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(28, 28, 28)
+                            .addComponent(scpOfDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         pManipulationLayout.setVerticalGroup(
@@ -167,18 +203,15 @@ public class InterfaceView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pManipulationLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(btnPriceOfMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbImageInMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnChooseImg)
-                        .addComponent(btnDescriptionOfMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnDescriptionOfMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnChooseImg))
                 .addGap(29, 29, 29)
-                .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lbArrowDown))
+                .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
             .addGroup(pManipulationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pManipulationLayout.createSequentialGroup()
@@ -193,10 +226,9 @@ public class InterfaceView extends javax.swing.JFrame {
                     .addGap(75, 75, 75)))
         );
 
-        lbArrow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProGastroImage/arrow_13475987.png"))); // NOI18N
-
         scpDishes.setBackground(new java.awt.Color(0, 204, 204));
 
+        pOfScp.setBackground(new java.awt.Color(204, 255, 255));
         pOfScp.setPreferredSize(new java.awt.Dimension(645, 430));
         pOfScp.setLayout(new java.awt.GridLayout(5, 5));
         scpDishes.setViewportView(pOfScp);
@@ -207,12 +239,7 @@ public class InterfaceView extends javax.swing.JFrame {
             pMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 650, Short.MAX_VALUE)
             .addGroup(pMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(pManipulation, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE))
-            .addGroup(pMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pMenuLayout.createSequentialGroup()
-                    .addGap(309, 309, 309)
-                    .addComponent(lbArrow)
-                    .addContainerGap(309, Short.MAX_VALUE)))
+                .addComponent(pManipulation, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(pMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pMenuLayout.createSequentialGroup()
                     .addGap(3, 3, 3)
@@ -225,12 +252,7 @@ public class InterfaceView extends javax.swing.JFrame {
             .addGroup(pMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pMenuLayout.createSequentialGroup()
                     .addGap(0, 275, Short.MAX_VALUE)
-                    .addComponent(pManipulation, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGroup(pMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pMenuLayout.createSequentialGroup()
-                    .addContainerGap(447, Short.MAX_VALUE)
-                    .addComponent(lbArrow)
-                    .addContainerGap()))
+                    .addComponent(pManipulation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addGroup(pMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pMenuLayout.createSequentialGroup()
                     .addContainerGap()
@@ -240,10 +262,17 @@ public class InterfaceView extends javax.swing.JFrame {
 
         pTables.setLayout(new java.awt.GridLayout(6, 6));
 
+        menuBar.setBackground(new java.awt.Color(204, 255, 255));
+        menuBar.setForeground(new java.awt.Color(0, 0, 0));
+
+        menu.setForeground(new java.awt.Color(0, 0, 0));
         menu.setText("Menu");
+        menu.setFont(new java.awt.Font("SVN-Amsi Narw Light", 1, 12)); // NOI18N
         menuBar.add(menu);
 
+        menuTables.setForeground(new java.awt.Color(0, 0, 0));
         menuTables.setText("Tables");
+        menuTables.setFont(new java.awt.Font("SVN-Amsi Narw Light", 1, 12)); // NOI18N
         menuBar.add(menuTables);
 
         setJMenuBar(menuBar);
@@ -302,8 +331,6 @@ public class InterfaceView extends javax.swing.JFrame {
     public javax.swing.JButton btnName;
     public javax.swing.JButton btnPriceOfMenu;
     public javax.swing.JButton btnSave;
-    public javax.swing.JLabel lbArrow;
-    public javax.swing.JLabel lbArrowDown;
     public javax.swing.JLabel lbImageInMenu;
     public javax.swing.JMenu menu;
     public javax.swing.JMenuBar menuBar;
@@ -322,36 +349,96 @@ public class InterfaceView extends javax.swing.JFrame {
     public void addController(){
         menu.addMouseListener(menuBarController);
         menuTables.addMouseListener(menuBarController);
-        lbArrow.addMouseListener(menuBarController);
-        lbArrowDown.addMouseListener(menuBarController);
         btnAdd.addActionListener(pMenuController);
         btnSave.addActionListener(pMenuController);
         btnChooseImg.addActionListener(pMenuController);
-    }
-
-    void isRevalidate(){        
-        if(ManipulationWithDishInfo.isFixed == true){
-            System.out.println("Fixed");
-            this.pOfScp.revalidate();
-            this.pOfScp.repaint();
-            this.revalidate();
-            this.repaint();
-            ManipulationWithDishInfo.isFixed = false;
-        }
     }
     
     public void turnOnPDishInfo() {
         pTables.setVisible(false);
     }
 
+    public void setTable2(){
+        FileOutputStream fos = null;
+        ObjectOutputStream oos = null;
+        try{
+            fos = new FileOutputStream("src//file//Table.DAT");
+            oos = new ObjectOutputStream(fos);
+            for(int i = 1; i <= 36; ++i){
+                Table table = new Table();
+                BtnTable btnTable = new BtnTable(table);
+                btnTable.setActionCommand("btnTable");
+                pTables.add(btnTable);
+                Tables.tables.add(btnTable);
+                btnTable.addActionListener(tableController);
+            }
+            oos.writeObject(Tables.tables);
+        }catch(FileNotFoundException ex){
+            Logger.getLogger(ManipulationWithTable.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ManipulationWithTable.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                oos.close();
+                fos.close();
+            } catch (IOException ex) {
+                Logger.getLogger(ManipulationWithTable.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
     public void setTable(){
-        for(int i = 1; i <= 36; ++i){
-            Table table = new Table();
-            BtnTable btnTable = new BtnTable(table);
-            btnTable.setActionCommand("btnTable");
-            pTables.add(btnTable);
-            
-            btnTable.addActionListener(tableController);
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
+        try {
+            fis = new FileInputStream("src//file//Table.DAT");
+            ois = new ObjectInputStream(fis);
+            Tables.tables = (ArrayList<BtnTable>) ois.readObject();
+            for(BtnTable btnTable: Tables.tables){
+                this.pTables.add(btnTable);
+                btnTable.addActionListener(tableController);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(InterfaceView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(InterfaceView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(InterfaceView.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                ois.close();
+                fis.close();
+            } catch (IOException ex) {
+                Logger.getLogger(InterfaceView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public void setBtnDish(){
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
+        try {
+            fis = new FileInputStream("src//file//Dish.DAT");
+            ois = new ObjectInputStream(fis);
+            Dishes.dishes = (ArrayList<Dish>) ois.readObject();
+            for(Dish dish: Dishes.dishes){
+                BtnDish btnDish = new BtnDish(dish);
+                btnDish.addActionListener(pMenuController);
+                this.pOfScp.add(btnDish);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(InterfaceView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(InterfaceView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(InterfaceView.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                ois.close();
+                fis.close();
+            } catch (IOException ex) {
+                Logger.getLogger(InterfaceView.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

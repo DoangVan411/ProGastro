@@ -5,6 +5,8 @@
 package model;
 
 import Model.Dish;
+import java.awt.Color;
+import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -21,6 +23,8 @@ public class BtnDish extends JButton{
         this.setText(dish.getName());
         this.setActionCommand("btnNewDish");
         this.setIcon(new ImageIcon(dish.getImage()));
+        this.setBackground(Color.white);
+        this.setFont(new Font("SVN-Amsi Narw Light", Font.BOLD, 14));
     }
 
     public void setDish(Dish dish) {

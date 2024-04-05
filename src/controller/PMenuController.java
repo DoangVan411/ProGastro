@@ -14,8 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.BtnDish;
-import model.ManipulationWithDishInfo;
-import model.ManipulationWithMenu;
 import view.DishInfo;
 import view.InterfaceView;
 
@@ -27,13 +25,15 @@ public class PMenuController implements ActionListener{
 
     InterfaceView interfaceView;
     ManipulationWithMenu manipulationWithMenu;
-    DishInfo dishInfo = new DishInfo();
-    ManipulationWithDishInfo manipulationWithDishInfo = new ManipulationWithDishInfo(dishInfo);
+    DishInfo dishInfo;
+    ManipulationWithDishInfo manipulationWithDishInfo;
     
     public PMenuController(InterfaceView interfaceView, ManipulationWithMenu manipulationWithMenu)
     {
         this.interfaceView = interfaceView;
         this.manipulationWithMenu = manipulationWithMenu;
+        this.dishInfo = new DishInfo(interfaceView);
+        manipulationWithDishInfo = new ManipulationWithDishInfo(dishInfo, interfaceView);
     }
 
     public static BtnDish onStage;
@@ -50,7 +50,7 @@ public class PMenuController implements ActionListener{
             Object btnDish = e.getSource();
             dishClicked = (BtnDish)btnDish;
             onStage = (BtnDish) btnDish;
-            DishInfo dishInfo = new DishInfo();
+            DishInfo dishInfo = new DishInfo(interfaceView);
             manipulationWithDishInfo.showInfo((BtnDish) btnDish, dishInfo);
             dishInfo.setVisible(true);
         }

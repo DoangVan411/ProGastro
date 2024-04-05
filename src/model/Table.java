@@ -1,11 +1,12 @@
 package model;
 
 import Model.Dish;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Table {
+public class Table implements Serializable {
     
     public Map<Dish, Integer> map = new HashMap<Dish, Integer>();
     private int bill;

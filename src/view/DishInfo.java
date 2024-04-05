@@ -8,22 +8,27 @@ import controller.DishInfoController;
 import controller.MenuBarController;
 import controller.PMenuController;
 import javax.swing.JFrame;
-import model.ManipulationWithDishInfo;
-import model.ManipulationWithMenu;
+import controller.ManipulationWithDishInfo;
+import controller.ManipulationWithMenu;
+import javax.swing.ImageIcon;
 
 /**
  *
  * @author dell
  */
 public class DishInfo extends JFrame{
-    
-    
-    ManipulationWithDishInfo manipulationWithDishInfo = new ManipulationWithDishInfo(this);
-    DishInfoController dishInfoController = new DishInfoController(this, manipulationWithDishInfo);
+    InterfaceView interfaceView;
+    ManipulationWithDishInfo manipulationWithDishInfo;
+    DishInfoController dishInfoController;
     /**
      * Creates new form DishInfo
      */
-    public DishInfo() {
+    public DishInfo(InterfaceView interfaceView) {
+        ImageIcon icon = new ImageIcon("src//ProGastroImage//frameicon.png");
+        this.setIconImage(icon.getImage());
+        this.interfaceView = interfaceView;
+        this.manipulationWithDishInfo = new ManipulationWithDishInfo(this, interfaceView);
+        dishInfoController = new DishInfoController(this, manipulationWithDishInfo);
         initComponents();
         addListener();
     }
@@ -63,38 +68,56 @@ public class DishInfo extends JFrame{
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Infomation");
+        setFont(new java.awt.Font("SVN-Amsi Narw Light", 1, 12)); // NOI18N
+        setName("InformationFrame"); // NOI18N
 
-        pDishInfo.setBackground(new java.awt.Color(255, 255, 255));
+        pDishInfo.setBackground(new java.awt.Color(204, 255, 255));
+        pDishInfo.setForeground(new java.awt.Color(0, 153, 153));
         pDishInfo.setPreferredSize(new java.awt.Dimension(210, 468));
 
-        lbName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lbName.setForeground(new java.awt.Color(51, 51, 51));
+        lbName.setBackground(new java.awt.Color(0, 153, 153));
+        lbName.setFont(new java.awt.Font("SVN-Amsi Narw Light", 1, 18)); // NOI18N
+        lbName.setForeground(new java.awt.Color(255, 255, 255));
         lbName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbName.setText("Description");
         lbName.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        lbName.setOpaque(true);
 
-        lbPrice.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lbPrice.setForeground(new java.awt.Color(51, 51, 51));
+        lbPrice.setBackground(new java.awt.Color(0, 153, 153));
+        lbPrice.setFont(new java.awt.Font("SVN-Amsi Narw Light", 1, 18)); // NOI18N
+        lbPrice.setForeground(new java.awt.Color(255, 255, 255));
         lbPrice.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbPrice.setText("Name");
         lbPrice.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        lbPrice.setOpaque(true);
 
-        lbDescription.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lbDescription.setForeground(new java.awt.Color(51, 51, 51));
+        lbDescription.setBackground(new java.awt.Color(0, 153, 153));
+        lbDescription.setFont(new java.awt.Font("SVN-Amsi Narw Light", 1, 18)); // NOI18N
+        lbDescription.setForeground(new java.awt.Color(255, 255, 255));
         lbDescription.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbDescription.setText("Price");
         lbDescription.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        lbDescription.setOpaque(true);
 
         taDescription.setColumns(20);
         taDescription.setRows(5);
         spDescription.setViewportView(taDescription);
 
-        btnFix.setText("Fix");
+        btnFix.setBackground(new java.awt.Color(0, 153, 153));
+        btnFix.setFont(new java.awt.Font("SVN-Amsi Narw Light", 1, 14)); // NOI18N
+        btnFix.setForeground(new java.awt.Color(255, 255, 255));
+        btnFix.setText("Edit");
 
+        btnRemove.setBackground(new java.awt.Color(0, 153, 153));
+        btnRemove.setFont(new java.awt.Font("SVN-Amsi Narw Light", 1, 14)); // NOI18N
+        btnRemove.setForeground(new java.awt.Color(255, 255, 255));
         btnRemove.setText("Remove");
         btnRemove.setActionCommand("btnRemove");
 
-        btnChoose.setText("...");
+        lbImage.setBackground(new java.awt.Color(153, 255, 255));
+
+        btnChoose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ProGastroImage/icon ảnh-01.png"))); // NOI18N
         btnChoose.setActionCommand("btnChoose");
 
         javax.swing.GroupLayout pDishInfoLayout = new javax.swing.GroupLayout(pDishInfo);

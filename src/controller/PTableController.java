@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.util.Set;
 import javax.swing.table.DefaultTableModel;
 import model.BtnTable;
-import model.ManipulationWithTable;
 import view.InterfaceView;
 import view.TableInfo;
 
@@ -27,7 +26,7 @@ public class PTableController implements ActionListener{
         this.interfaceView = interfaceView;
         manipulationWithTable = new ManipulationWithTable();
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();

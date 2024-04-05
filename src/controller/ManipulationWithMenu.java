@@ -2,24 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model;
+package controller;
 
 import Model.Dish;
 import Model.Dishes;
-import controller.PMenuController;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import view.DishInfo;
+import model.BtnDish;
 import view.InterfaceView;
 
 /**
  *
  * @author dell
  */
-public class ManipulationWithMenu {
+public class ManipulationWithMenu{
     public InterfaceView interfaceView;
     public PMenuController pMenuController;
     
@@ -30,6 +34,10 @@ public class ManipulationWithMenu {
         
     }
 
+    public ManipulationWithMenu(){
+        
+    }
+    
     public void eraseForm(){
         this.interfaceView.tfNameInMenu.setText("");
         this.interfaceView.tfPriceOfMenu.setText("");
@@ -38,23 +46,31 @@ public class ManipulationWithMenu {
     }
     
     public void addDish(Dish dish){
-        Dishes.dishes.add(dish);
-        System.out.println(dish.getImage());
-        BtnDish btnNewDish = new BtnDish(dish);
-        btnNewDish.addActionListener(pMenuController);
-        interfaceView.pOfScp.add(btnNewDish);
-        interfaceView.pOfScp.revalidate();
-        System.out.println("Added");
-    }
-    
-    
-    
-    public void resizePOfScp(int width, int height)
-    {
-        interfaceView.pOfScp.setSize(width, height);
-        interfaceView.scpDishes.setSize(width, height);
-        interfaceView.pOfScp.revalidate();
-        interfaceView.scpDishes.revalidate();
+        FileOutputStream fos = null;
+        ObjectOutputStream oos = null;
+        try {
+            fos = new FileOutputStream("src//file//Dish.DAT");
+            oos = new ObjectOutputStream(fos);
+            Dishes.dishes.add(dish);
+            oos.writeObject(Dishes.dishes);
+            System.out.println(dish.getImage());
+            BtnDish btnNewDish = new BtnDish(dish);
+            btnNewDish.addActionListener(pMenuController);
+            interfaceView.pOfScp.add(btnNewDish);
+            interfaceView.pOfScp.revalidate();
+            System.out.println("Added");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ManipulationWithMenu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ManipulationWithMenu.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                oos.close();
+                fos.close();
+            } catch (IOException ex) {
+                Logger.getLogger(ManipulationWithMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     

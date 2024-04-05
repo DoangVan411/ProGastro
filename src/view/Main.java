@@ -1,4 +1,4 @@
-package test;
+package view;
 
 
 import controller.MenuBarController;
@@ -9,7 +9,6 @@ public class Main{
     
     public static void main(String[] args) {
         InterfaceView interfaceView = new InterfaceView();
-//        MenuBarController interfaceController = new MenuBarController(interfaceView);
         interfaceView.setVisible(true);
     }
 }
