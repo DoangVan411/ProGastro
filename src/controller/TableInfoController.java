@@ -8,8 +8,11 @@ package controller;
 import Model.Dish;
 import Model.Dishes;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.ComponentSampleModel;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import model.Table;
 import view.TableInfo;
@@ -22,10 +25,10 @@ public class TableInfoController implements ActionListener{
 
     TableInfo tableInfo;
     ManipulationWithTable manipulationWithTable;
+    
     public TableInfoController(TableInfo tableInfo) {
         this.tableInfo = tableInfo;
         manipulationWithTable = new ManipulationWithTable(tableInfo);
-        
     }
     
     @Override
@@ -37,6 +40,11 @@ public class TableInfoController implements ActionListener{
             tableInfo.tfPriceShow.setText("");
             tableInfo.taDescription.setText("");
             tableInfo.tfQuantityShow.setText("");
+            Component[] components = tableInfo.pRcmDish.getComponents();
+            for (Component comp : components) {
+                tableInfo.pRcmDish.remove(comp);
+            }
+            tableInfo.revalidate();
             Table.setChoiceString("Add");
         }else if(cmd.equals("Save")){
             if(Table.getChoiceString().equals("Edit"))
@@ -48,7 +56,7 @@ public class TableInfoController implements ActionListener{
                 manipulationWithTable.addDishToTable(PTableController.btnOnStage);
             }
         }else if(cmd.equals("Find by name")){
-            manipulationWithTable.findDish(tableInfo.tfFindDish.getText());
+            manipulationWithTable.showRcm(tableInfo.tfFindDish.getText());
         }else if(cmd.equals("Export")){
             PTableController.btnOnStage.setBackground(Color.WHITE);
             tableInfo.dispose();
@@ -61,7 +69,10 @@ public class TableInfoController implements ActionListener{
             tableInfo.tfQuantityShow.setText("");
             tableInfo.tfFindDish.setText((String) tableInfo.table.getValueAt(row, 1));
         }else if(cmd.equals("Remove")){
-            manipulationWithTable.removeDish(manipulationWithTable.setRowSelected());
+            int choice = JOptionPane.showConfirmDialog(null, "Remove?", "Confirm" ,JOptionPane.YES_NO_OPTION);
+            if(choice == JOptionPane.YES_OPTION){
+                manipulationWithTable.removeDish(manipulationWithTable.setRowSelected());
+            }
         }
     }
     

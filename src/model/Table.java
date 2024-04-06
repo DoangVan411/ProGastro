@@ -11,7 +11,7 @@ public class Table implements Serializable {
     public Map<Dish, Integer> map = new HashMap<Dish, Integer>();
     private int bill;
     private static String choiceString = "Add";
-
+    
     public static String getChoiceString() {
         return choiceString;
     }

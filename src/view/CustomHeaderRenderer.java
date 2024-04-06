@@ -18,7 +18,7 @@ class CustomHeaderRenderer extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         component.setBackground(new Color(0,153,153)); // Đặt màu nền mong muốn cho tiêu đề cột
-        component.setForeground(Color.WHITE);
+        component.setForeground(Color.black);
         return component;
     }
 }

@@ -9,6 +9,7 @@ import Model.Dishes;
 import controller.PMenuController;
 import controller.PTableController;
 import java.awt.Color;
+import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,8 +18,11 @@ import java.io.ObjectOutputStream;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import model.BtnDish;
 import model.BtnTable;
 import model.Tables;
 import view.TableInfo;
@@ -30,12 +34,12 @@ import view.TableInfo;
 public class ManipulationWithTable {
     TableInfo tableInfo;
     DefaultTableModel model;
+    DishRcmController dishRcmController;
     FileOutputStream fos = null;
     ObjectOutputStream oos = null;
-    
     public ManipulationWithTable(TableInfo tableInfo){
         this.tableInfo = tableInfo;
-        
+        dishRcmController = new DishRcmController(tableInfo, this);
     }
     
     public ManipulationWithTable(){
@@ -49,11 +53,14 @@ public class ManipulationWithTable {
             oos = new ObjectOutputStream(fos);
             try{
                 model = (DefaultTableModel) tableInfo.table.getModel();
-                Dish tmpDish = this.findDish(tableInfo.tfFindDish.getText());
-                if(btnTable.table.map.containsKey(tmpDish)){
-                    JOptionPane.showMessageDialog(tableInfo,"Dish is already existed!");
-                    isAdded = false;
-                    return;
+                Dish tmpDish = DishRcmController.dishChosen.dish;
+                Set<Dish> set = PTableController.btnOnStage.table.map.keySet();
+                for(Dish dish: set)
+                {
+                    if(dish.getName().equals(tmpDish.getName())){
+                        JOptionPane.showMessageDialog(tableInfo,"Dish is already served!");
+                        return;
+                    }
                 }
                 btnTable.table.map.put(tmpDish, Integer.valueOf(tableInfo.tfQuantityShow.getText()));
                 model = (DefaultTableModel) tableInfo.table.getModel();
@@ -189,14 +196,36 @@ public class ManipulationWithTable {
     public Dish findDish(String name){
         for(Dish dish: Dishes.dishes){
             System.out.println(dish.getName());
-            if(dish.getName().contains(name) && 
+            if(dish.getName().toLowerCase().contains(name.toLowerCase()) && 
                     !name.equals("") && 
                     !name.equals(" "))
             {
-                setInfo(dish.getName(), dish.getPrice() + "", dish.getDiscription());
                 return dish;
             }
         }
         return null;
+    }
+    
+    public void showRcm(String name){
+        for(Dish dish: Dishes.dishes){
+            System.out.println(dish.getName());
+            if(dish.getName().toLowerCase().contains(name.toLowerCase()) && 
+                    !name.equals("") && 
+                    !name.equals(" "))
+            {
+                BtnDish button = new BtnDish(dish);
+                button.setIcon(null);
+                button.setText(dish.getName());
+                button.setActionCommand("Dish");
+                button.setBorder(new LineBorder(new Color(0,102,102)));
+                button.setBackground(Color.white);
+                button.setForeground(new Color(0,102,102));
+                button.setFont(new Font("SVN-Amsi Narw Light", Font.BOLD, 14));
+                tableInfo.pRcmDish.add(button);
+                tableInfo.pRcmDish.revalidate();
+                tableInfo.pRcmDish.repaint();
+                button.addActionListener(dishRcmController);
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import model.BtnDish;
 import view.DishInfo;
 import view.InterfaceView;
@@ -38,9 +39,11 @@ public class DishInfoController implements ActionListener{
             tmpImage.replace(0, tmpImage.length(), manipulationWithDishInfo.addImage());
             dishInfo.lbImage.setIcon(new ImageIcon(tmpImage.toString()));
         }else if(command.equals("btnRemove")){
-            
-            manipulationWithDishInfo.removeDish(PMenuController.dishClicked, dishInfo, PMenuController.dishClicked.dish);
-            isRemoved = true;
+            int choice = JOptionPane.showConfirmDialog(null, "Remove?", "Confirm" ,JOptionPane.YES_NO_OPTION);
+            if(choice == JOptionPane.YES_OPTION){
+                manipulationWithDishInfo.removeDish(PMenuController.dishClicked, dishInfo, PMenuController.dishClicked.dish);
+                isRemoved = true;
+            }
         }
     }
     
