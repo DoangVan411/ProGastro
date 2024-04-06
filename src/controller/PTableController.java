@@ -18,12 +18,10 @@ import view.TableInfo;
  * @author dell
  */
 public class PTableController implements ActionListener{
-    InterfaceView interfaceView;
     public static BtnTable btnOnStage;
     ManipulationWithTable manipulationWithTable;
     
-    public PTableController(InterfaceView interfaceView){
-        this.interfaceView = interfaceView;
+    public PTableController(){
         manipulationWithTable = new ManipulationWithTable();
     }
     

@@ -6,15 +6,15 @@ package controller;
 
 import Model.Dish;
 import Model.Dishes;
-import controller.PMenuController;
-import controller.PTableController;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.text.MessageFormat;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,7 +39,7 @@ public class ManipulationWithTable {
     ObjectOutputStream oos = null;
     public ManipulationWithTable(TableInfo tableInfo){
         this.tableInfo = tableInfo;
-        dishRcmController = new DishRcmController(tableInfo, this);
+        dishRcmController = new DishRcmController(this);
     }
     
     public ManipulationWithTable(){
@@ -225,6 +225,32 @@ public class ManipulationWithTable {
                 tableInfo.pRcmDish.revalidate();
                 tableInfo.pRcmDish.repaint();
                 button.addActionListener(dishRcmController);
+            }
+        }
+    }
+    
+    public void export(BtnTable btnTable){
+        try{
+            fos = new FileOutputStream("src//file//Table.DAT");
+            oos = new ObjectOutputStream(fos);
+            try {
+                btnTable.table.map.clear();
+                btnTable.setBackground(Color.WHITE);
+                oos.writeObject(Tables.tables);
+                tableInfo.table.print();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }catch(FileNotFoundException ex){
+            Logger.getLogger(ManipulationWithTable.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ManipulationWithTable.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                oos.close();
+                fos.close();
+            } catch (IOException ex) {
+                Logger.getLogger(ManipulationWithTable.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

@@ -19,7 +19,6 @@ import view.InterfaceView;
 public class DishInfoController implements ActionListener{
     DishInfo dishInfo;
     ManipulationWithDishInfo manipulationWithDishInfo;
-    public static boolean isRemoved = false;
     
     public DishInfoController(DishInfo dishInfo, ManipulationWithDishInfo manipulationWithDishInfo) {
         this.dishInfo = dishInfo;
@@ -41,8 +40,7 @@ public class DishInfoController implements ActionListener{
         }else if(command.equals("btnRemove")){
             int choice = JOptionPane.showConfirmDialog(null, "Remove?", "Confirm" ,JOptionPane.YES_NO_OPTION);
             if(choice == JOptionPane.YES_OPTION){
-                manipulationWithDishInfo.removeDish(PMenuController.dishClicked, dishInfo, PMenuController.dishClicked.dish);
-                isRemoved = true;
+                manipulationWithDishInfo.removeDish(PMenuController.onStage, dishInfo, PMenuController.onStage.dish);
             }
         }
     }

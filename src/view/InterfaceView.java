@@ -46,7 +46,7 @@ public class InterfaceView extends javax.swing.JFrame {
     MenuBarController menuBarController = new MenuBarController(this);
     ManipulationWithMenu manipulationWithMenu = new ManipulationWithMenu(this);
     PMenuController pMenuController = new PMenuController(this, manipulationWithMenu);
-    PTableController tableController = new PTableController(this);
+    PTableController tableController = new PTableController();
     
     public InterfaceView() {
         ImageIcon icon = new ImageIcon("src//ProGastroImage//frameicon.png");
@@ -354,9 +354,6 @@ public class InterfaceView extends javax.swing.JFrame {
         btnChooseImg.addActionListener(pMenuController);
     }
     
-    public void turnOnPDishInfo() {
-        pTables.setVisible(false);
-    }
 
     public void setTable2(){
         FileOutputStream fos = null;

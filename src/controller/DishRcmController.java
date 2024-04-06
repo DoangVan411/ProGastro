@@ -15,14 +15,10 @@ import view.TableInfo;
  * @author dell
  */
 public class DishRcmController implements ActionListener{
-
-    TableInfo tableInfo;
     ManipulationWithTable manipulationWithTable;
     public static BtnDish dishChosen;
 
-    
-    public DishRcmController(TableInfo tableInfo, ManipulationWithTable manipulationWithTable){
-        this.tableInfo = tableInfo;
+    public DishRcmController(ManipulationWithTable manipulationWithTable){
         this.manipulationWithTable = manipulationWithTable;
     }
     

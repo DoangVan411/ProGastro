@@ -58,7 +58,7 @@ public class TableInfoController implements ActionListener{
         }else if(cmd.equals("Find by name")){
             manipulationWithTable.showRcm(tableInfo.tfFindDish.getText());
         }else if(cmd.equals("Export")){
-            PTableController.btnOnStage.setBackground(Color.WHITE);
+            manipulationWithTable.export(PTableController.btnOnStage);
             tableInfo.dispose();
         }else if(cmd.equals("Edit")){
             Table.setChoiceString("Edit");

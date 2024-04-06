@@ -17,7 +17,6 @@ import javax.swing.ImageIcon;
  * @author dell
  */
 public class DishInfo extends JFrame{
-    InterfaceView interfaceView;
     ManipulationWithDishInfo manipulationWithDishInfo;
     DishInfoController dishInfoController;
     /**
@@ -26,7 +25,6 @@ public class DishInfo extends JFrame{
     public DishInfo(InterfaceView interfaceView) {
         ImageIcon icon = new ImageIcon("src//ProGastroImage//frameicon.png");
         this.setIconImage(icon.getImage());
-        this.interfaceView = interfaceView;
         this.manipulationWithDishInfo = new ManipulationWithDishInfo(this, interfaceView);
         dishInfoController = new DishInfoController(this, manipulationWithDishInfo);
         initComponents();

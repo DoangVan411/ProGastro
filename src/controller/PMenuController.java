@@ -37,7 +37,6 @@ public class PMenuController implements ActionListener{
     }
 
     public static BtnDish onStage;
-    public static BtnDish dishClicked;
     public static StringBuffer imgPath = new StringBuffer();
     
     @Override
@@ -48,7 +47,6 @@ public class PMenuController implements ActionListener{
             manipulationWithMenu.eraseForm();
         }else if(command.equals("btnNewDish")){
             Object btnDish = e.getSource();
-            dishClicked = (BtnDish)btnDish;
             onStage = (BtnDish) btnDish;
             DishInfo dishInfo = new DishInfo(interfaceView);
             manipulationWithDishInfo.showInfo((BtnDish) btnDish, dishInfo);

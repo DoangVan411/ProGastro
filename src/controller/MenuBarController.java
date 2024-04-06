@@ -10,11 +10,9 @@ import view.InterfaceView;
 public class MenuBarController implements MouseListener{
     
     InterfaceView interfaceView;
-    ManipulationWithMenu manipulationWithMenu;
     
     public MenuBarController(InterfaceView interfaceView) {
         this.interfaceView = interfaceView;
-        manipulationWithMenu = new ManipulationWithMenu(interfaceView);
     }
 
     @Override
