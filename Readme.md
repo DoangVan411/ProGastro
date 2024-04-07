@@ -42,7 +42,7 @@
 Cách cài đặt dự án
 
 - Clone dự án
-- Mở terminal và chạy class Main.java
+- Chạy class Main.java
 
 ### License
 [MIT](https://choosealicense.com/licenses/mit/)
