@@ -30,7 +30,15 @@
 - Profile: Full JRE
 - Encoding: UTF-8
 
-Installation
+### UML
+#### Class Diagram
+![](ScreenShots//classdiagram.png)
+
+#### Activity Diagram
+![](ScreenShots//ActivityDiagram.png)
+
+
+### Installation
 Cách cài đặt dự án
 
 - Clone dự án
